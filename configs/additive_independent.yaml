@@ -1,0 +1,70 @@
+seed: 42
+
+system:
+  name: "additive_independent"
+  description: "Двовимірна адитивна незалежна стохастична система"
+
+data:
+  x1_min: -3.0
+  x1_max: 3.0
+
+  x2_min: -3.0
+  x2_max: 3.0
+
+  a1_min: -1.5
+  a1_max: 1.5
+
+  b1_min: -1.0
+  b1_max: 1.0
+
+  sigma1_min: 0.05
+  sigma1_max: 0.8
+
+  a2_min: -1.5
+  a2_max: 1.5
+
+  b2_min: -1.0
+  b2_max: 1.0
+
+  sigma2_min: 0.05
+  sigma2_max: 0.8
+
+  dt_min: 0.001
+  dt_max: 0.05
+
+  train_samples: 300000
+  val_samples: 50000
+  test_samples: 50000
+
+model:
+  input_dim: 11
+  hidden_dim: 128
+  output_dim: 2
+  n_layers: 3
+  activation: "gelu"
+
+train:
+  batch_size: 256
+  lr: 0.0005
+  epochs: 150
+  weight_decay: 0.0001
+  early_stopping_patience: 25
+  early_stopping_min_delta: 0.000000000001
+
+eval:
+  monte_carlo_paths: 300
+  rollout_dt: 0.01
+  rollout_steps: 300
+  rollout_params:
+    x1_0: 1.5
+    x2_0: -1.0
+    a1: -0.8
+    b1: 0.4
+    sigma1: 0.25
+    a2: -0.5
+    b2: -0.3
+    sigma2: 0.35
+
+paths:
+  dataset_path: "data/additive_independent_dataset.npz"
+  model_path: "outputs/additive_independent_model.pth"

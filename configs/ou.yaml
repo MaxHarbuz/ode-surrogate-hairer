@@ -1,0 +1,53 @@
+seed: 42
+
+system:
+  name: "ou"
+  description: "Одновимірний процес Орнштейна-Уленбека"
+
+data:
+  x_min: -3.0
+  x_max: 3.0
+
+  theta_min: 0.1
+  theta_max: 3.0
+
+  mu_min: -2.0
+  mu_max: 2.0
+
+  sigma_min: 0.05
+  sigma_max: 1.0
+
+  dt_min: 0.001
+  dt_max: 0.05
+
+  train_samples: 300000
+  val_samples: 50000
+  test_samples: 50000
+
+model:
+  input_dim: 6
+  hidden_dim: 128
+  output_dim: 1
+  n_layers: 3
+  activation: "gelu"
+
+train:
+  batch_size: 256
+  lr: 0.0005
+  epochs: 150
+  weight_decay: 0.0001
+  early_stopping_patience: 25
+  early_stopping_min_delta: 0.000000000001
+
+eval:
+  monte_carlo_paths: 300
+  rollout_dt: 0.01
+  rollout_steps: 300
+  rollout_params:
+    theta: 1.2
+    mu: 0.0
+    sigma: 0.35
+    x0: 2.0
+
+paths:
+  dataset_path: "data/ou_dataset.npz"

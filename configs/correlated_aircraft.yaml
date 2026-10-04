@@ -1,0 +1,94 @@
+seed: 42
+
+system:
+  name: "correlated_aircraft"
+  description: "Корельована двовимірна стохастична система зі зв’язаними drift-компонентами та мультиплікативним шумом"
+
+data:
+  h_min: 0.2
+  h_max: 3.0
+
+  v_min: -2.0
+  v_max: 2.0
+
+  a_h_min: -1.2
+  a_h_max: -0.2
+
+  b_h_min: 0.2
+  b_h_max: 1.2
+
+  c_h_min: -0.5
+  c_h_max: 0.5
+
+  sigma_h_min: 0.05
+  sigma_h_max: 0.5
+
+  k_h_min: 0.05
+  k_h_max: 0.4
+
+  a_v_min: -1.2
+  a_v_max: -0.2
+
+  b_v_min: -0.8
+  b_v_max: 0.8
+
+  c_v_min: -0.5
+  c_v_max: 0.5
+
+  sigma_v_min: 0.05
+  sigma_v_max: 0.5
+
+  k_v_min: 0.05
+  k_v_max: 0.4
+
+  rho_min: -0.8
+  rho_max: 0.8
+
+  dt_min: 0.001
+  dt_max: 0.05
+
+  train_samples: 300000
+  val_samples: 50000
+  test_samples: 50000
+
+model:
+  input_dim: 16
+  hidden_dim: 128
+  output_dim: 2
+  n_layers: 3
+  activation: "gelu"
+
+train:
+  batch_size: 256
+  lr: 0.0005
+  epochs: 150
+  weight_decay: 0.0001
+  early_stopping_patience: 25
+  early_stopping_min_delta: 0.000000000001
+
+eval:
+  rollout_dt: 0.01
+  rollout_steps: 300
+  monte_carlo_paths: 300
+
+  rollout_params:
+    h_0: 1.5
+    v_0: 0.4
+
+    a_h: -0.6
+    b_h: 0.7
+    c_h: 0.1
+    sigma_h: 0.18
+    k_h: 0.2
+
+    a_v: -0.5
+    b_v: -0.35
+    c_v: 0.05
+    sigma_v: 0.25
+    k_v: 0.25
+
+    rho: 0.6
+
+paths:
+  dataset_path: "data/correlated_aircraft_dataset.npz"
+  model_path: "outputs/correlated_aircraft_model.pth"
